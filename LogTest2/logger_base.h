@@ -14,6 +14,7 @@ namespace udrlog
 		using writer_t = LoggerWriter<CHAR_T>;
 		using writer_ptr_t = std::shared_ptr<writer_t>;
 		using string_t = std::basic_string<CHAR_T>;
+		using ostringstream_t = std::basic_ostringstream<CHAR_T>;
 
 		logger_base();
 		logger_base(const logger_base & rv) = delete;
@@ -32,7 +33,7 @@ namespace udrlog
 		static string_t m_separator;
 
 		bool m_has_data;
-		std::basic_ostringstream<CHAR_T> m_ostream;
+		ostringstream_t m_ostream;
 
 		string_t m_create_timestamp() const;
 	};
@@ -55,10 +56,23 @@ typename logger_base<CHAR_T>::string_t
 logger_base<CHAR_T>::m_create_timestamp() const
 {
 	using clock_t = std::chrono::system_clock;
+	const auto now = clock_t::now();
 
-	const auto ts = clock_t::now();
+	std::time_t now_c = std::chrono::system_clock::to_time_t(now);
+	std::tm now_tm;
+	localtime_s(&now_tm, &now_c);
 
-	return typename logger_base<CHAR_T>::string_t(); // UBEDEBUG - TODO
+	constexpr CHAR_T ZERO('0');
+	ostringstream_t oss;
+	oss << std::setfill(ZERO) << std::setw(4) << now_tm.tm_year + 1900
+		<< std::setfill(ZERO) << std::setw(2) << now_tm.tm_mon + 1
+		<< std::setfill(ZERO) << std::setw(2) << now_tm.tm_mday
+		<< m_separator
+		<< std::setfill(ZERO) << std::setw(2) << now_tm.tm_hour
+		<< std::setfill(ZERO) << std::setw(2) << now_tm.tm_min
+		<< std::setfill(ZERO) << std::setw(2) << now_tm.tm_sec;
+
+	return oss.str();
 }
 
 template <typename CHAR_T>
