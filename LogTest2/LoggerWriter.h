@@ -15,7 +15,7 @@ namespace udrlog
 
 		virtual ~LoggerWriter() = default;
 
-		virtual void write(const string_t & msg) = 0;
+		virtual void write(const string_t & msg) {}; // UBEDEBUG  = 0;
 	};
 
 } // namespace

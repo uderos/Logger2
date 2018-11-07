@@ -5,10 +5,10 @@
 
 namespace udrlog
 {
-	logger_stdout::writer_t logger_stdout::m_writer;
-	logger_stdout::string_t logger_stdout::m_separator("|");
+	std::shared_ptr<logger::writer_t>  logger::m_writer_ptr;
+	std::shared_ptr<wlogger::writer_t> wlogger::m_writer_ptr;
 
-	wlogger_stdout::writer_t wlogger_stdout::m_writer;
-	wlogger_stdout::string_t wlogger_stdout::m_separator(L"#");
+	logger::string_t  logger::m_separator("|");
+	wlogger::string_t wlogger::m_separator(L"#");
 
 } // namespace udrlog
