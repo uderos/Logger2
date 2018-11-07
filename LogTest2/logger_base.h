@@ -18,13 +18,14 @@ namespace udrlog
 
 		logger_base();
 		logger_base(const logger_base & rv) = delete;
-		// TODO logger_base(logger_base && rv);
+		logger_base(logger_base && rv);
 		virtual ~logger_base();
 
 		template <typename VALUE_T>
 		logger_base<CHAR_T> & operator<<(const VALUE_T & value);
 
 		static writer_ptr_t set_writer(writer_ptr_t writer_ptr);
+		static logger_base<CHAR_T> create_instance();
 
 
 	private:
@@ -42,6 +43,15 @@ namespace udrlog
 template <typename CHAR_T>
 logger_base<CHAR_T>::logger_base() : m_has_data(false)
 {
+}
+
+template <typename CHAR_T>
+logger_base<CHAR_T>::logger_base(logger_base<CHAR_T> && rv)
+{
+	m_has_data = rv.m_has_data;
+	m_ostream = std::move(rv.m_ostream);
+
+	rv.m_has_data = false;
 }
 
 template <typename CHAR_T>
@@ -102,6 +112,14 @@ logger_base<CHAR_T>::operator<<(const VALUE_T & value)
 	}
 
 	return (*this);
+}
+
+template <typename CHAR_T>
+logger_base<CHAR_T> 
+logger_base<CHAR_T>::create_instance()
+{
+//	return std::move(logger_base<CHAR_T>());
+	return logger_base<CHAR_T>();
 }
 
 

@@ -10,3 +10,6 @@ namespace udrlog
 	using wlogger = logger_base<wchar_t>;
 
 } // namespace udrlog
+
+#define UDR_LOG (udrlog::logger::create_instance())
+#define UDR_WLOG (udrlog::wlogger::create_instance())
