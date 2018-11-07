@@ -147,14 +147,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Logger.h" />
     <ClInclude Include="LoggerWriter.h" />
     <ClInclude Include="LoggerWriterStdio.h" />
+    <ClInclude Include="logger_base.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="LoggerWriter.cpp" />
-    <ClCompile Include="LoggerWriterStdio.cpp" />
+    <ClCompile Include="Logger.cpp" />
     <ClCompile Include="LogTest2.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
